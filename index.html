@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="A Birthday Surprise for Madam — a cinematic interactive experience">
+  <title>A Birthday Surprise for Madam</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Start Overlay (autoplay fallback) -->
+  <div id="start-overlay">
+    <h1>A Birthday Surprise for Madam</h1>
+    <p>A cinematic experience created with gratitude</p>
+    <button id="start-btn" type="button">Start Birthday Surprise</button>
+  </div>
+
+  <!-- Scene progress dots -->
+  <div id="scene-indicator" aria-hidden="true">
+    <span class="scene-dot" data-scene="1"></span>
+    <span class="scene-dot" data-scene="2"></span>
+    <span class="scene-dot" data-scene="3"></span>
+    <span class="scene-dot" data-scene="4"></span>
+    <span class="scene-dot" data-scene="5"></span>
+  </div>
+
+  <div id="app">
+    <!-- ========== SCENE 1: Opening ========== -->
+    <section id="scene-1" class="scene" aria-label="Opening">
+      <h1 class="scene-title">Happy Birthday, Madam</h1>
+      <p class="wish-text visible" style="font-size:1.25rem; color:var(--gold-light);">
+        Today we celebrate the teacher who shaped our minds and hearts.
+      </p>
+      <div id="quotes-1"></div>
+      <button class="nav-btn" onclick="SceneManager.next()">Continue →</button>
+    </section>
+
+    <!-- ========== SCENE 2: Wishes ========== -->
+    <section id="scene-2" class="scene" aria-label="Birthday Wishes">
+      <h2 class="scene-title">With Heartfelt Gratitude</h2>
+      <p class="wish-text">Thank you for teaching us programming and the practical skills that turn ideas into working solutions.</p>
+      <p class="wish-text">Your patience when we made mistakes taught us that every error is a step toward mastery.</p>
+      <p class="wish-text">You never merely gave answers — you helped us understand concepts and think logically.</p>
+      <p class="wish-text">Because of your guidance we grew more confident in our abilities and in continuous learning.</p>
+      <p class="wish-text">Happy Birthday, Madam. May this day bring you the same joy you have given so many students.</p>
+      <div id="quotes-2"></div>
+      <button class="nav-btn" onclick="SceneManager.next()">Continue →</button>
+    </section>
+
+    <!-- ========== SCENE 3: Letter + Sync ========== -->
+    <section id="scene-3" class="scene" aria-label="Personalized Letter">
+      <h2 class="scene-title">A Letter for You</h2>
+      <div class="letter-panel">
+        <div id="letter-body" class="letter-body">
+          <!-- populated by letter-sync.js -->
+        </div>
+      </div>
+      <div id="quotes-3"></div>
+      <button class="nav-btn" onclick="SceneManager.next()">Continue →</button>
+    </section>
+
+    <!-- ========== SCENE 4: Photo Gallery ========== -->
+    <section id="scene-4" class="scene" aria-label="Memory Gallery">
+      <h2 class="scene-title">Cherished Memories</h2>
+      <p style="color:var(--text-muted); margin-bottom:1rem;">Moments that remain with us</p>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="group-classroom.jpg" alt="Classroom celebration with roses" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="group-redcarpet.jpg" alt="Event on the red carpet" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="certificates-group.jpg" alt="Certificate and trophy moment" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="certificates-group2.jpg" alt="Another certificate celebration" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="IMG-20261028-WA0028.jpg" alt="Madam in light blue saree" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="IMG-20261028-WA0029.jpg" alt="Group of friends in traditional attire" loading="lazy">
+        </div>
+      </div>
+      <button class="nav-btn" onclick="SceneManager.next()" style="margin-top:2rem;">Final Surprise →</button>
+    </section>
+
+    <!-- ========== SCENE 5: Challenge + Gift ========== -->
+    <section id="scene-5" class="scene" aria-label="Secret Challenge">
+      <h2 class="scene-title">One Final Surprise</h2>
+      <p style="color:var(--text-muted);">One final surprise is waiting for you…</p>
+
+      <div id="challenge-stage" class="challenge-box">
+        <label for="answer-select" style="display:block; margin-bottom:0.5rem; color:var(--gold-light);">
+          Choose the correct phrase:
+        </label>
+        <select id="answer-select" aria-label="Select the secret phrase">
+          <option value="">— Select an option —</option>
+          <option value="Next Vachinde">Next Vachinde</option>
+          <option value="Ade kadu amma">Ade kadu amma</option>
+          <option value="Moham pagilipodhi">Moham pagilipodhi</option>
+        </select>
+        <button id="unlock-btn" type="button">Unlock the Surprise</button>
+        <div id="challenge-feedback" class="feedback" role="status"></div>
+      </div>
+
+      <div id="gift-stage" class="gift-container">
+        <p style="color:var(--gold-light); font-size:1.2rem;">Your final surprise is ready!</p>
+        <p style="color:var(--text-muted); font-size:0.95rem;">Tap the gift box to open it</p>
+        <div id="gift-box" class="gift-box" role="button" tabindex="0" aria-label="Open gift box">
+          <div class="lid"></div>
+          <div class="ribbon"></div>
+          <div class="body"></div>
+        </div>
+        <div id="final-photo-wrap" class="final-photo-wrap">
+          <img id="final-photo" alt="Special memory — three friends in uniform" src="">
+        </div>
+        <p id="closing-message" class="closing-message">
+          Dear Madam,<br><br>
+          Thank you for every patient hour, every explanation, and every moment you believed in us.
+          Your influence lives on in every line of code we write and every student we help.
+          Wishing you a birthday as warm and bright as the light you have shared.<br><br>
+          With deepest respect and love from your students.
+        </p>
+        <button class="nav-btn" id="replay-btn" style="margin-top:1.5rem;">Replay Surprise</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Persistent audio controls -->
+  <div id="audio-bar" role="toolbar" aria-label="Audio controls">
+    <button id="btn-play" type="button" title="Play / Pause" aria-label="Play or pause">▶</button>
+    <button id="btn-replay" type="button" title="Replay from start" aria-label="Replay">↺</button>
+    <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.7" title="Volume" aria-label="Volume">
+    <span id="progress-text">0:00 / 0:00</span>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
